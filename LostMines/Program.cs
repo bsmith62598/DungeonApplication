@@ -16,7 +16,6 @@ namespace LostMines
 
             //TODO 1. Create the player - need to create a class for this, as well as an instance of a weapon.
 
-            //TODO 2. Create a loop for the room and monster.
             bool exit = false;
 
             do
@@ -28,7 +27,6 @@ namespace LostMines
                 bool reload = false;
                 do
                 {
-                    //TODO 6. Create a menu
                     #region User Menu
                     Console.Write("\n\nPlease Choose an Action:\n" +
                         "A) Attack\n" +
@@ -71,7 +69,6 @@ namespace LostMines
                         case ConsoleKey.E:
                             Console.WriteLine("Buh Bye\n");
                             exit = true;
-                            //TODO 13. Add exit logic
                             break;
 
                         default:
@@ -107,7 +104,6 @@ namespace LostMines
             int indexNbr = rand.Next(rooms.Length);
             string room = "**** NEW ROOM ****\n" + rooms[indexNbr] + "\n";
             return room;
-
         }
     }
 }
