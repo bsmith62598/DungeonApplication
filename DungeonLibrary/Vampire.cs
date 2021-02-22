@@ -15,7 +15,16 @@ namespace DungeonLibrary
 
         public Vampire(string name, string description, int maxHealth, int life, int block, int hitChance, int minDamage, int maxDamage):base(name, description, maxHealth, life, block, hitChance, minDamage, maxDamage)
         {
+            HourChangeBack = DateTime.Now;
 
+            if (HourChangeBack.Hour > 20 && HourChangeBack.Hour < 4)
+            {
+                MaxHealth += 10;
+                Life += 10;
+                HitChance -= 10;
+                MaxDamage += 10;
+                MinDamage += 10;
+            }
         }
     }
 }

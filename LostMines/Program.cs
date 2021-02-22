@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DungeonLibrary;
 
 namespace LostMines
 {
@@ -14,10 +15,123 @@ namespace LostMines
             Console.WriteLine("Your journey into the mines begins...");
             int score = 0;
 
-            //TODO 1. Create the player - need to create a class for this, as well as an instance of a weapon.
+            #region Weapons
+            Weapon w1 = new Weapon("Dagger", "A compact dagger made of iron", 10, 1, 40);
+            Weapon w2 = new Weapon("Long Sword", "A simple longsword made of iron", 20, 3, 10);
+            Weapon w3 = new Weapon("Battle Axe", "A sturdy two handed battle axe", 40, 10, -15);
+            Weapon w4 = new Weapon("Quarter Staff", "An ornate staff made of a very sturdy wood", 25, 4, 20);
+            #endregion
 
+            #region Player Creation
+            Player p1 = new Player();
+            #region Player Name
+            Console.WriteLine("Please enter your character's name.");
+            p1.Name = Console.ReadLine();
+            #endregion
+            #region Player Class
+            bool classPick = false;
+           do
+            {
+            Console.WriteLine("Now pick your class. The Choices are: \n" +
+                "R) Rouge" +
+                "\nB) Barbarian" +
+                "\nW) Warrior" +
+                "\nM) Monk");
+            
+            ConsoleKey classChoice = Console.ReadKey(true).Key;
+            if (classChoice == ConsoleKey.R)
+            {
+                p1.Class = Class.Rouge;
+                    classPick = true;
+            }
+            if (classChoice == ConsoleKey.B)
+            {
+                p1.Class = Class.Barbarian;
+                    classPick = true;
+            }
+            if (classChoice == ConsoleKey.W)
+            {
+                p1.Class = Class.Warrior;
+                    classPick = true;
+            }
+            if (classChoice == ConsoleKey.M)
+            {
+                p1.Class = Class.Monk;
+                    classPick = true;
+            }
+           } while (!classPick);
+            #endregion
+            #region Player Race
+            bool playerRace = false;
+            do
+            {
+                Console.WriteLine("Please Choose a Race:" +
+                    "\nH) Human" +
+                    "\nE) Elf" +
+                    "\nO) Orc" +
+                    "\nL) Lizzard Folk" +
+                    "\nD) Dwarf" +
+                    "\nG) Gnome");
+                ConsoleKey raceChoice = Console.ReadKey(true).Key;
+                if (raceChoice == ConsoleKey.H)
+                {
+                    p1.Race = Race.Human;
+                    playerRace = true;
+                }
+                if (raceChoice == ConsoleKey.E)
+                {
+                    p1.Race = Race.Elf;
+                    playerRace = true;
+                }
+                if (raceChoice == ConsoleKey.O)
+                {
+                    p1.Race = Race.Orc;
+                    playerRace = true;
+                }
+                if (raceChoice == ConsoleKey.L)
+                {
+                    p1.Race = Race.LizardFolk;
+                    playerRace = true;
+                }
+                if (raceChoice == ConsoleKey.D)
+                {
+                    p1.Race = Race.Dwarf;
+                    playerRace = true;
+                }
+                if (raceChoice == ConsoleKey.G)
+                {
+                    p1.Race = Race.Gnome;
+                    playerRace = true;
+                }
+            } while (!playerRace);
+            #endregion
+            #region Player Weapon
+            if (p1.Class == Class.Barbarian)
+            {
+                p1.Equipment = w3;
+            }
+            if (p1.Class == Class.Monk)
+            {
+                p1.Equipment = w4;
+            }
+            if (p1.Class == Class.Warrior)
+            {
+                p1.Equipment = w2;
+            }
+            if (p1.Class == Class.Rouge)
+            {
+                p1.Equipment = w1;
+            }
+            #endregion
+            p1.Level = 1;
+            p1.MaxHealth = 15;
+            p1.Life = 15;
+            p1.Block = 40;
+            p1.HitChance = 25 + p1.Equipment.BonusHitChance;
+            p1.EXP = 0;
+            #endregion
             bool exit = false;
-
+            Console.Clear();
             do
             {
                 Console.WriteLine(GetRoom());
@@ -57,7 +171,7 @@ namespace LostMines
 
                         case ConsoleKey.P:
                             Console.WriteLine("Player stats\n");
-                            //TODO 11. Input Player stats
+                            Console.WriteLine(p1);
                             break;
 
                         case ConsoleKey.M:
