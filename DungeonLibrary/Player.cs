@@ -33,10 +33,23 @@ namespace DungeonLibrary
                 "\nClass: {1}" +
                 "\nRace: {2}" +
                 "\nLevel: {3}" +
+                "\nEXP: {8}" +
                 "\nCurrent Health: {4}" +
                 "\nHit Chance: {5}%" +
                 "\nBLock: {6}" +
-                "\nEquipped Weapon: {7}", Name, Class, Race, Level, Life, HitChance, Block, Equipment);
+                "\nEquipped Weapon: {7}", Name, Class, Race, Level, Life, HitChance, Block, Equipment, EXP);
+        }
+
+        public override int CalcHitChance()
+        {
+            return base.CalcHitChance() + Equipment.BonusHitChance;
+        }
+
+        public override int CalcDamage()
+        {
+            Random rand = new Random();
+            int damage = rand.Next(Equipment.MinDamage, Equipment.MaxDamage + 1);
+            return damage;
         }
     }
 }

@@ -24,6 +24,10 @@ namespace DungeonLibrary
                 {
                     _minDamage = value;
                 }
+                else
+                {
+                    _minDamage = 1;
+                }
             }
         }
 

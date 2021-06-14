@@ -43,5 +43,20 @@ namespace DungeonLibrary
             Block = block;
             HitChance = hitChance;
         }
+
+        public virtual int CalcHitChance ()
+        {
+            return HitChance;
+        }
+
+        public virtual int CalcDamage()
+        {
+            return 1;
+        }
+
+        public virtual int CalcBlock()
+        {
+            return Block;
+        }
     }
 }

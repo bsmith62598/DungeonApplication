@@ -22,6 +22,17 @@ namespace LostMines
             Weapon w4 = new Weapon("Quarter Staff", "An ornate staff made of a very sturdy wood", 25, 4, 20);
             #endregion
 
+            #region Monsters
+            Monster m1 = new Monster("Rat", "A small rat", 10, 10, 65, 70, 1, 2);
+            Monster m2 = new Monster("Ooze", "A gelatenous ooze that smells real bad", 20, 20, 40, 50, 1, 15);
+            Werewolf wolf1 = new Werewolf("Ralph", "A seemingly normal man", 45, 45, 30, 50, 2, 7);
+            Vampire v1 = new Vampire("Straad", "A very pale man", 40, 40, 50, 60, 1, 5);
+            #endregion
+
+            #region Monster List
+            List<Monster> monsters = new List<Monster> { m1, m2, v1, wolf1 };
+            #endregion
+
             #region Player Creation
             Player p1 = new Player();
             #region Player Name
@@ -109,26 +120,45 @@ namespace LostMines
             if (p1.Class == Class.Barbarian)
             {
                 p1.Equipment = w3;
+                p1.Level = 1;
+                p1.MaxHealth = 25;
+                p1.Life = 25;
+                p1.Block = 40;
+                p1.HitChance = 15;
+                p1.EXP = 0;
             }
             if (p1.Class == Class.Monk)
             {
+                p1.Level = 1;
+                p1.MaxHealth = 25;
+                p1.Life = 25;
+                p1.Block = 50;
+                p1.HitChance = 35;
+                p1.EXP = 0;
                 p1.Equipment = w4;
             }
             if (p1.Class == Class.Warrior)
             {
                 p1.Equipment = w2;
+                p1.Level = 1;
+                p1.MaxHealth = 30;
+                p1.Life = 30;
+                p1.Block = 35;
+                p1.HitChance = 30;
+                p1.EXP = 0;
             }
             if (p1.Class == Class.Rouge)
             {
+                p1.Level = 1;
+                p1.MaxHealth = 15;
+                p1.Life = 15;
+                p1.Block = 55;
+                p1.HitChance = 40;
+                p1.EXP = 0;
                 p1.Equipment = w1;
             }
             #endregion
-            p1.Level = 1;
-            p1.MaxHealth = 15;
-            p1.Life = 15;
-            p1.Block = 40;
-            p1.HitChance = 25 + p1.Equipment.BonusHitChance;
-            p1.EXP = 0;
+            
             #endregion
             bool exit = false;
             Console.Clear();
@@ -137,6 +167,10 @@ namespace LostMines
                 Console.WriteLine(GetRoom());
 
                 //TODO 4. Create a monster for the room - learn about creating objects and then randomly selecting one.
+                Random rand = new Random();
+                int randomNumber = rand.Next(monsters.Capacity);
+                Monster monster = monsters[randomNumber];
+                Console.WriteLine("A Monster Appears!! " + monster.Name);
 
                 bool reload = false;
                 do
@@ -147,6 +181,7 @@ namespace LostMines
                         "R) Run Away\n" +
                         "P) Player Info\n" +
                         "M) Monster Info\n" +
+                        "L) Level Up \n\n" +
                         "X) Exit \n\n" +
                         "Current Score: {0}\n\n", score);
                     #endregion
@@ -161,7 +196,15 @@ namespace LostMines
                     {
                         case ConsoleKey.A:
                             Console.WriteLine("Attack\n");
-                            //TODO 9. Build attack logic
+                            Combat.DoBattle(p1, monster);
+                            if (monster.Life <= 0)
+                            {
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine("\nYou killed {0}\n", monster.Name);
+                                Console.ResetColor();
+                                reload = true;
+                                score++;
+                            }
                             break;
 
                         case ConsoleKey.R:
@@ -176,7 +219,7 @@ namespace LostMines
 
                         case ConsoleKey.M:
                             Console.WriteLine("Monster stats\n");
-                            //TODO 12. Input Monster stats
+                            Console.WriteLine(monster);
                             break;
 
                         case ConsoleKey.X:
@@ -185,13 +228,18 @@ namespace LostMines
                             exit = true;
                             break;
 
+                        case ConsoleKey.L:
+                            Console.WriteLine("Level up");
+                            LevelUp.DoLevelUp(p1);
+                            break;
+
                         default:
                             //TODO 14. Add EXP logic to character sheet. Take EXP away for messing up
                             Console.WriteLine("How even? It was only like 5 buttons and you messed up? Mistakes are costly in these mines.\n");
+                            p1.EXP -= 100;
                             break;
 
                     }
-                    //TODO 15. Handle Player Life
                     #endregion
 
 
